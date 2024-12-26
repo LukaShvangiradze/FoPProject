@@ -1,4 +1,4 @@
-Project: Building a Simple Interpreter
+# Project: Building a Simple Interpreter
 
 In this capstone project, we will design and implement a simple interpreter 
 for a programming language. The project will focus on creating and supporting 
