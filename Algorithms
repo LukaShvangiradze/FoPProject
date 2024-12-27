@@ -75,6 +75,37 @@ PRINT a
 
 Code:
 
+
+
+
+DIM a AS INTEGER, 
+DIM b AS INTEGER
+DIM emp AS INTEGER
+
+INPUT a
+INPUT b
+
+WHILE b != 0
+    temp = b
+    b = a MOD b
+    a = temp
+WEND
+
+PRINT a
+DIM N AS INTEGER
+DIM factorial AS LONGINT 
+
+INPUT N 
+
+factorial = 1
+
+WHILE N > 0
+    factorial = factorial * N
+    N = N - 1
+WEND
+
+PRINT factorial
+
 ------------------------------------------------------------------------------------------------------------------------------------
 5. Check if a Number is Prime
 	•	Description: Determine if a given number N is a prime number.
