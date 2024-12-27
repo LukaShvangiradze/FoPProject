@@ -79,3 +79,58 @@ public class FreeBASICInterpreter {
         //variables contain only alphabet symbols in their names
         // >, <, >=, <=, ==, !=
 }
+if(comp.length() != 0) { // number
+           x = Integer.parseInt(comp);
+        }
+        else {
+            for(int i = 5 + save.length(); i < str.length(); i++) {
+                if(str.charAt(i - 1) == ' ') {
+                    for(int j = i; j < str.length(); j++){
+                        if(str.charAt(j) ==' ') break;
+                        comp += str.charAt(i);
+                    }
+                    break;
+                }
+
+            }
+x = map.get(comp);
+
+  if(next.contains("/")) {
+                        div(next);
+                    }
+                    if(next.contains("MOD")) {
+                        mod(next);
+                    }
+                    if(next.contains("+")) {
+                        plus(next);
+                    }
+                    if(next.contains("-")) {
+                        minus(next);
+                    }
+
+                }
+            }
+        }
+
+
+    }
+
+    public static void minus(String line) {
+    }
+
+    public static void plus(String line) {
+    }
+
+    public static void mod(String line) {
+    }
+
+    public static void div(String line) {
+    }
+
+    public static void mul(String line) {
+
+    }
+
+
+
+}
