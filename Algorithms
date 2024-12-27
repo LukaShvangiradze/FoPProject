@@ -49,7 +49,22 @@ PRINT fact
           Input: a = 48, b = 18
           Output: 6
 
-Code:
+Code: 
+
+DIM a AS INTEGER, 
+DIM b AS INTEGER
+DIM emp AS INTEGER
+
+INPUT a
+INPUT b
+
+WHILE b != 0
+    temp = b
+    b = a MOD b
+    a = temp
+WEND
+
+PRINT a
 
 ------------------------------------------------------------------------------------------------------------------------------------
 4. Reverse a Number
