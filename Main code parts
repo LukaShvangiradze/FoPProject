@@ -33,3 +33,22 @@ public class FreeBASICInterpreter {
             //Press Ctrl + D to stop getting input
         }
 }
+
+for(int i = 0 ; i < store.size(); i++) {
+            if(store.get(i).startsWith("DIM ")) {
+                String dim = "";
+                for(int j = 4; j < store.get(i).length(); i++) {
+                    if(store.get(i).charAt(j) != ' ') {
+                        dim += store.get(i).charAt(j);
+                    }
+                    if(dim.length() > 0 && store.get(i).charAt(j) == ' ') {
+                        break;
+                    }
+                }
+                map.put(dim, 0);
+            }
+            if(store.get(i).contains("IF")) {
+               IF(i);
+            }
+
+        }
