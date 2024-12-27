@@ -28,6 +28,20 @@ PRINT sum
 
 Code:
 
+DIM N AS INTEGER
+DIM fact AS LONGINT
+DIM i AS INTEGER
+
+fact = 1
+
+INPUT N
+
+FOR i = 1 TO N
+    fact = fact * i
+NEXT i
+
+PRINT fact
+
 ------------------------------------------------------------------------------------------------------------------------------------
 3. GCD of Two Numbers
 	•	Description: Find the greatest common divisor (GCD) of two integers using the Euclidean algorithm.
