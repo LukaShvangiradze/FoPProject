@@ -1,0 +1,112 @@
+1. Sum of First N Numbers
+	•	Description: Calculate the sum of the first N natural numbers using loop.
+	•	Example:
+          Input: N = 10
+          Output: 55
+
+Code:
+
+DIM N AS INTEGER
+DIM sum AS INTEGER
+DIM i AS INTEGER
+
+sum = 0
+
+INPUT N
+
+FOR i = 1 TO N
+    sum = sum + i
+NEXT i
+
+PRINT sum
+------------------------------------------------------------------------------------------------------------------------------------
+2. Factorial of N
+	•	Description: Compute the factorial of a given number N.
+	•	Example:
+          Input: N = 5
+          Output: 120
+
+Code:
+
+------------------------------------------------------------------------------------------------------------------------------------
+3. GCD of Two Numbers
+	•	Description: Find the greatest common divisor (GCD) of two integers using the Euclidean algorithm.
+	•	Example:
+          Input: a = 48, b = 18
+          Output: 6
+
+Code:
+
+------------------------------------------------------------------------------------------------------------------------------------
+4. Reverse a Number
+	•	Description: Reverse the digits of an integer.
+	•	Example:
+          Input: 1234
+          Output: 4321
+
+Code:
+
+------------------------------------------------------------------------------------------------------------------------------------
+5. Check if a Number is Prime
+	•	Description: Determine if a given number N is a prime number.
+	•	Example:
+          Input: N = 13
+          Output: True
+
+Code:
+
+------------------------------------------------------------------------------------------------------------------------------------
+6. Check if a Number is Palindrome
+	•	Description: Check if an integer reads the same backward and forward.
+	•	Example:
+          Input: 121
+          Output: True
+
+Code:
+
+------------------------------------------------------------------------------------------------------------------------------------
+7. Find the Largest Digit in a Number
+	•	Description: Identify the largest digit in a given integer.
+	•	Example:
+          Input: n = 3947
+          Output: 9
+
+Code:
+
+------------------------------------------------------------------------------------------------------------------------------------
+8. Sum of Digits
+	•	Description: Calculate the sum of the digits of a number.
+	•	Example:
+          Input: 1234
+          Output: 10
+
+Code:
+
+------------------------------------------------------------------------------------------------------------------------------------
+9. Multiplication Table
+	•	Description: Generate and print the multiplication table for a given number up to 10.
+	•	Example:
+          Input: 5
+          Output:
+
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+
+Code:
+
+------------------------------------------------------------------------------------------------------------------------------------
+10. Nth Fibonacci Number
+	•	Description: Compute the Nth Fibonacci number using iteration or recursion.
+	•	Example:
+          Input: N = 10
+          Output: 34
+
+Code:
