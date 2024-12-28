@@ -102,6 +102,49 @@ private boolean handleIf(String line) {
         return false;
     }
 
+   private void handlePrint(String line) {
+        String sub = line;
+        sub = line.substring(5).trim();
+        if('0'<= sub.charAt(0) && sub.charAt(0) <='9') {
+            System.out.println(Integer.parseInt(sub));
+        }
+        else {
+            System.out.println(map.get(sub));
+        }
+    }
+
+    private void handleAssignment(String line) {
+        String[] par = line.split("=");
+        String val = par[0].trim();
+        par[1] = par[1].trim();
+        if(par[1].contains("+")) {
+            handleA(val, par[1], "\+");
+        }
+        else if(par[1].contains("-")) {
+            handleA(val, par[1], "\-");
+        }
+        else if(par[1].contains("/")) {
+            handleA(val, par[1], "\/");
+        }
+        else if(par[1].contains("")) {
+            handleA(val, par[1], "\");
+        }
+        else if(par[1].contains("MOD")) {
+            handleA(val, par[1], "MOD");
+        }
+        else {
+            if('0' <= par[1].charAt(0) && par[1].charAt(0) <= '9') {
+                 map.put(val, Integer.parseInt(par[1]));
+            }
+            else {
+                map.put(val, map.get(par[1]));
+            }
+        }
+
+    }
+
+    //there is no handleA, so someone add such function that works on these operations
+
 
     public static void main(String[] args) {
 
