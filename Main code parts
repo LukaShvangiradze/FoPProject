@@ -143,7 +143,31 @@ private boolean handleIf(String line) {
 
     }
 
-    //there is no handleA, so someone add such function that works on these operations
+    private void handleA(String v, String par1, String op) {
+        String[] div = par1.split(op);
+        String lef = div[0].trim();
+        String rig = div[1].trim();
+
+        int x, y;
+
+        if('0' <= lef.charAt(0) && lef.charAt(0) <= '9') {
+            x = Integer.parseInt(lef);
+        }
+        else x = map.get(lef);
+
+        if('0' <= rig.charAt(0) && rig.charAt(0) <= '9') {
+            y = Integer.parseInt(rig);
+        }
+        else y = map.get(rig);
+
+        if(op == "\+") map.put(v, x + y);
+        if(op == "\-") map.put(v, x - y);
+        if(op == "\") map.put(v, x y);
+        if(op == "\%") map.put(v, x / y); // 0
+        if(op == "MOD") map.put(v, x % y); //0
+
+    }
+
 
 
     public static void main(String[] args) {
