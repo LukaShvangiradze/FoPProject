@@ -1,136 +1,69 @@
-package FoPProject;
+package BASICInterpreter;
 
 import java.util.*;
 
-public class FreeBASICInterpreter {
+public class InterpreterMain {
 
+    private static Map<String, Integer> map = new HashMap<>();
 
+    private static boolean bigInd = true;
 
-    static Map<String, Integer> map = new HashMap<>();
+    public void eval(String code) {
+        String[] lines = code.split("\n");
+         for(int i = 0; i < lines.length; i++) {
+            lines[i] = lines[i].trim();
+            if (lines[i].isEmpty()) continue;
 
-    static ArrayList<String> store = new ArrayList<>();
+            //INTEGER ebis garda araferi
+            //10+20-30, 0 ze gayofa danashtva, if an else shi bevri rame
+             //if shi number - 10 >5
+             //error ebis povna ara
+             //input ar gvaq
+             //FOR, while
 
-    public static void main(String[] args) {
-
-        Scanner scanner = new Scanner(System.in);
-
-
-
-        while(scanner.hasNextLine()) {
-            String input = scanner.nextLine();
-            input.trim();
-            String sub = "";
-            for (int i = 1; i < input.length(); i++) {
-                if (input.charAt(i) == ' ' && input.charAt(i - 1) != ' ') {
-                    sub += input.charAt(i);
-                }
-                if (input.charAt(i) != ' ') {
-                    sub += input.charAt(i);
-                }
-
+            if(lines[i].startsWith("DIM ")) {
+                handleDim(lines[i]);
             }
-            store.add(sub);
-            //Press Ctrl + D to stop getting input
-        }
-
-      for(int i = 0 ; i < store.size(); i++) {
-            if(store.get(i).startsWith("DIM ")) {
-                String dim = "";
-                for(int j = 4; j < store.get(i).length(); i++) {
-                    if(store.get(i).charAt(j) != ' ') {
-                        dim += store.get(i).charAt(j);
-                    }
-                    if(dim.length() > 0 && store.get(i).charAt(j) == ' ') {
+            if(lines[i].startsWith("PRINT ")) {
+                handlePrint(lines[i]);
+            }
+            if(lines[i].startsWith("IF ")) {
+                boolean ind = handleIf(lines[i]);
+                if(!ind) {i += 2; bigInd = false;}
+            }
+            if(lines[i].startsWith("ELSE ") && !bigInd) {bigInd = true; continue;}
+            if(lines[i].startsWith("ELSE ") && bigInd) {
+                for(int j = i; j < lines.length; j++) {
+                    if(lines[j].startsWith("END ")) {
+                        i = j;
                         break;
                     }
                 }
-                map.put(dim, 0);
             }
-            if(store.get(i).contains("IF")) {
-               IF(i);
-            }
-
-     }
-}
-
- public static void IF(int ind) {
-        String str = store.get(ind);
-        String save = "";
-
-        for(int i = 2; i < str.length(); i++) {
-            if(str.charAt(i) != ' ') {
-                save += str.charAt(i);
-            }
-            if(save.length() > 0 && str.charAt(i) == ' ') {
-                break;
+            if(lines[i].startsWith("END ")) continue;
+            if(lines[i].contains("=")) {
+                handleAssignment(lines[i]);
             }
         }
+    }
 
-        String comp = "";
 
-        for(int i = 0; i < str.length(); i++) {
-            if('0' <= str.charAt(i) && str.charAt(i) <= '9') {
-                comp += str.charAt(i);
-            }
+    public static void main(String[] args) {
+
+        InterpreterMain interpreter = new InterpreterMain();
+
+        Scanner sc = new Scanner(System.in);
+
+        String program = "";
+
+        while(sc.hasNextLine()) {
+            program += sc.nextLine();
+            program += '\n';
+            //press CTRL+D to stop
         }
 
-        int x;
-
-        //variables contain only alphabet symbols in their names
-        // >, <, >=, <=, ==, !=
-}
-if(comp.length() != 0) { // number
-           x = Integer.parseInt(comp);
-        }
-        else {
-            for(int i = 5 + save.length(); i < str.length(); i++) {
-                if(str.charAt(i - 1) == ' ') {
-                    for(int j = i; j < str.length(); j++){
-                        if(str.charAt(j) ==' ') break;
-                        comp += str.charAt(i);
-                    }
-                    break;
-                }
-
-            }
-x = map.get(comp);
-
-  if(next.contains("/")) {
-                        div(next);
-                    }
-                    if(next.contains("MOD")) {
-                        mod(next);
-                    }
-                    if(next.contains("+")) {
-                        plus(next);
-                    }
-                    if(next.contains("-")) {
-                        minus(next);
-                    }
-
-                }
-            }
-        }
-
+        interpreter.eval(program);
 
     }
-
-    public static void minus(String line) {
-    }
-
-    public static void plus(String line) {
-    }
-
-    public static void mod(String line) {
-    }
-
-    public static void div(String line) {
-    }
-
-    public static void mul(String line) {
-
-    }
-
-
 
 }
