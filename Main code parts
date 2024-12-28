@@ -47,6 +47,61 @@ public class InterpreterMain {
         }
     }
 
+    private void handleDim(String line) {
+        String sub = line;
+        sub = line.substring(3);
+       // String[] parts = line.split("DIM");
+       // String exp = parts[1].trim();
+        String[] par = sub.split("AS");
+        map.put(par[0].trim(), 0);
+    }
+private boolean handleIf(String line) {
+         if(line.contains(">")) {
+             String[] par = line.split(">");
+             String[] lef = par[0].split("IF");
+             String op = lef[1].trim();
+             String[] rig = par[1].split("THEN");
+             String opana = rig[0].trim();
+
+             int x, y;
+
+             if('0' <= op.charAt(0) && op.charAt(0) <= '9') {
+                 x = Integer.parseInt(op);
+             }
+             else x = map.get(op);
+
+             if('0' <= opana.charAt(0) && opana.charAt(0) <= '9') {
+                 y = Integer.parseInt(opana);
+             }
+             else y = map.get(opana);
+
+             return x > y;
+         }
+        if(line.contains("<")) {
+            String[] par = line.split("<");
+            String[] lef = par[0].split("IF");
+            String op = lef[1].trim();
+            String[] rig = par[1].split("THEN");
+            String opana = rig[0].trim();
+
+            int x, y;
+
+            if('0' <= op.charAt(0) && op.charAt(0) <= '9') {
+                x = Integer.parseInt(op);
+            }
+            else x = map.get(op);
+
+            if('0' <= opana.charAt(0) && opana.charAt(0) <= '9') {
+                y = Integer.parseInt(opana);
+            }
+            else y = map.get(opana);
+
+            return x < y;
+        }
+
+        return false;
+    }
+
 
     public static void main(String[] args) {
 
