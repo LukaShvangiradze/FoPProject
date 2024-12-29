@@ -120,6 +120,114 @@ public class InterpreterMain {
             }
         }
     }
+
+     private boolean isHandleWhile(String line) {
+        String[] par = line.split("WHILE");
+        if(line.contains(">=")) {
+            String[] div = par[1].split(">=");
+            int x, y;
+            div[0] = div[0].trim();
+            div[1] = div[1].trim();
+            if('0'<= div[0].charAt(0) && div[0].charAt(0) <= '9') {
+                x = Integer.parseInt(div[0]);
+            }
+            else x = map.get(div[0]);
+            if('0'<= div[1].charAt(0) && div[1].charAt(0) <= '9') {
+                y = Integer.parseInt(div[1]);
+            }
+            else y = map.get(div[1]);
+            return x >= y;
+
+        }
+        else if(line.contains("<=")) {
+            String[] div = par[1].split("<=");
+            int x, y;
+            div[0] = div[0].trim();
+            div[1] = div[1].trim();
+            if('0'<= div[0].charAt(0) && div[0].charAt(0) <= '9') {
+                x = Integer.parseInt(div[0]);
+            }
+            else x = map.get(div[0]);
+            if('0'<= div[1].charAt(0) && div[1].charAt(0) <= '9') {
+                y = Integer.parseInt(div[1]);
+            }
+            else y = map.get(div[1]);
+            return x <= y;
+        }
+        else if (line.contains("=")) {
+            String[] div = par[1].split("=");
+            int x, y;
+            div[0] = div[0].trim();
+            div[1] = div[1].trim();
+            if('0'<= div[0].charAt(0) && div[0].charAt(0) <= '9') {
+                x = Integer.parseInt(div[0]);
+            }
+            else x = map.get(div[0]);
+            if('0'<= div[1].charAt(0) && div[1].charAt(0) <= '9') {
+                y = Integer.parseInt(div[1]);
+            }
+            else y = map.get(div[1]);
+            return x == y;
+        }
+        else if (line.contains("<>")) {
+            String[] div = par[1].split("<>");
+            int x, y;
+            div[0] = div[0].trim();
+            div[1] = div[1].trim();
+            if('0'<= div[0].charAt(0) && div[0].charAt(0) <= '9') {
+                x = Integer.parseInt(div[0]);
+            }
+            else x = map.get(div[0]);
+            if('0'<= div[1].charAt(0) && div[1].charAt(0) <= '9') {
+                y = Integer.parseInt(div[1]);
+            }
+            else y = map.get(div[1]);
+            return x != y;
+        }
+        else if (line.contains("<")) {
+            String[] div = par[1].split("<");
+            int x, y;
+            div[0] = div[0].trim();
+            div[1] = div[1].trim();
+            if('0'<= div[0].charAt(0) && div[0].charAt(0) <= '9') {
+                x = Integer.parseInt(div[0]);
+            }
+            else x = map.get(div[0]);
+            if('0'<= div[1].charAt(0) && div[1].charAt(0) <= '9') {
+                y = Integer.parseInt(div[1]);
+            }
+            else y = map.get(div[1]);
+            return x < y;
+        }
+        else if (line.contains(">")) {
+            String[] div = par[1].split(">");
+            int x, y;
+            div[0] = div[0].trim();
+            div[1] = div[1].trim();
+            if('0'<= div[0].charAt(0) && div[0].charAt(0) <= '9') {
+                x = Integer.parseInt(div[0]);
+            }
+            else x = map.get(div[0]);
+            if('0'<= div[1].charAt(0) && div[1].charAt(0) <= '9') {
+                y = Integer.parseInt(div[1]);
+            }
+            else y = map.get(div[1]);
+            return x > y;
+        }
+
+
+        return false;
+    }
+
+    private void handleDim(String line) {
+        String sub = line;
+        sub = line.substring(3);
+        String[] par = sub.split(" AS ");
+        map.put(par[0].trim(), 0);
+    }
+
+
+
     public static void main(String[] args) {
 
         InterpreterMain interpreter = new InterpreterMain();
