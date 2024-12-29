@@ -232,6 +232,46 @@ public class InterpreterMain {
         return false;
     }
 
+private boolean booleanOperation(String line) {
+        boolean result = false;
+        String booleanOperations = "(>=|<=|==|>|<)";
+        String[] sides = line.split(booleanOperations);
+        String left = sides[0].trim();
+        String right = sides[1].trim();
+        String operation = line.substring(left.length(), line.length() - right.length()).trim();
+        if (!('0' <= left.charAt(0) && left.charAt(0) <= '9' || left.charAt(0) == '-')){
+            left = line.replace(left, map.get(left));
+        }
+        if (!('0' <= right.charAt(0) && right.charAt(0) <= '9' || right.charAt(0) == '-')){
+            right = line.replace(right, map.get(right));
+        }
+        int leftValue = Integer.parseInt(left);
+        int rightValue = Integer.parseInt(right);
+
+        switch (operation) {
+            case ">=":
+                result = leftValue >= rightValue;
+                break;
+            case "<=":
+                result = leftValue <= rightValue;
+                break;
+            case "==":
+                result = leftValue == rightValue;
+                break;
+            case ">":
+                result = leftValue > rightValue;
+                break;
+            case "<":
+                result = leftValue < rightValue;
+                break;
+            case "=":
+                result = leftValue == rightValue;
+                break;
+
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
 
         InterpreterMain interpreter = new InterpreterMain();
