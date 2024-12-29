@@ -1,1 +1,138 @@
+//FreeBASIC language, based on OneCompiler
+//avoid naming variables keyword names
+//true or false - 1 or 0
+//No data types other than INTEGERS
+//Error and input handling - optional
+//No multiple variables in an expression
+//No NEGATIVE NUMBERS
+//Division is by /
+//Preferred to separate everything with one space exactly
+//NO nested loops
+//NO ELSEIF keyword
 
+import java.util.*;
+
+public class InterpreterMain {
+
+    private static Scanner scanner = new Scanner(System.in);
+
+    private static Map<String, Integer> map = new HashMap<>();
+
+    private static boolean mulIfElse = true;
+
+    private static int ind;
+
+    private static int ind2;
+
+    private static int x, y;
+
+    private static String gen;
+
+    public void eval(String code) {
+        String[] lines = code.split("\n");
+        for (int i = 0; i < lines.length; i++) {
+            lines[i] = lines[i].trim();
+            if (lines[i].isEmpty()) continue;
+
+            else if(lines[i].startsWith("FOR ")) {
+                ind2 = i;
+                String[] par = lines[i].split("=");
+                String[] div = par[1].split("TO");
+                String[] dev = par[0].split("FOR");
+                gen = dev[1].trim();
+                String lef = div[0].trim();
+                String rig = div[1].trim();
+                if('0'<= lef.charAt(0) && lef.charAt(0) <= '9') {
+                    x = Integer.parseInt(lef);
+                    map.put(gen, x);
+                }
+                else {
+                    x = map.get(lef);
+                    map.put(gen, x);
+                }
+                if('0'<= rig.charAt(0) && rig.charAt(0) <= '9') {
+                    y = Integer.parseInt(rig);
+                }
+                else y = map.get(rig);
+
+                if(x > y) {
+                    for (int j = i; j < lines.length; j++) {
+                        if (lines[j].startsWith("NEXT ")) {
+                            i = j;
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            else if(lines[i].startsWith("NEXT ")) {
+                map.put(gen, ++x);
+                if(x <= y) {
+                    i = ind2;
+                }
+                else continue;
+            }
+
+            else if (lines[i].startsWith("WHILE ")) {
+                ind = i;
+                if (isHandleWhile(lines[ind])) {
+                    continue;
+                }
+                for (int j = i; j < lines.length; j++) {
+                    if (lines[j].startsWith("WEND")) {
+                        i = j;
+                        break;
+                    }
+                }
+
+            } else if (lines[i].startsWith("WEND")) {
+                if (isHandleWhile(lines[ind])) {
+                    i = ind;
+                }
+                else continue;
+            } else if (lines[i].startsWith("END ")) {
+                mulIfElse = true;
+                continue;
+            } else if (lines[i].startsWith("ELSE") && !mulIfElse) {
+                mulIfElse = true;
+                continue;
+            } else if (!mulIfElse) continue;
+
+            else if (lines[i].startsWith("DIM ")) {
+                handleDim(lines[i]);
+            } else if (lines[i].startsWith("PRINT ")) {
+                handlePrint(lines[i]);
+            } else if (lines[i].startsWith("IF ")) {
+                boolean ind = handleIf(lines[i]);
+                if (!ind) {
+                    mulIfElse = false;
+                }
+            } else if (lines[i].startsWith("ELSE") && mulIfElse) {
+                for (int j = i; j < lines.length; j++) {
+                    if (lines[j].startsWith("END ")) {
+                        i = j;
+                        break;
+                    }
+                }
+            } else if (lines[i].contains("=")) {
+                handleAssignment(lines[i]);
+            }
+        }
+    }
+    public static void main(String[] args) {
+
+        InterpreterMain interpreter = new InterpreterMain();
+
+        String program = "";
+
+        while(scanner.hasNextLine()) {
+            program += scanner.nextLine();
+            program += '\n';
+            //press CTRL+D to stop receiving input, or CTRL+Z depending on the computer
+        }
+
+        interpreter.eval(program);
+
+    }
+}
