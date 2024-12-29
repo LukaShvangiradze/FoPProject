@@ -4,9 +4,11 @@ import java.util.*;
 
 public class InterpreterMain {
 
+    private static Scanner scanner = new Scanner(System.in);
+
     private static Map<String, Integer> map = new HashMap<>();
 
-    private static boolean bigInd = true;
+    private static boolean mulIfElse = true;
 
     public void eval(String code) {
         String[] lines = code.split("\n");
@@ -14,8 +16,17 @@ public class InterpreterMain {
             lines[i] = lines[i].trim();
             if (lines[i].isEmpty()) continue;
 
+             if(lines[i].startsWith("END ")) {
+                 mulIfElse = true;
+                 continue;
+             }
+
+             if(lines[i].startsWith("ELSE") && !mulIfElse) {mulIfElse = true; continue;}
+
+             if(!mulIfElse) continue;
+
             //INTEGER ebis garda araferi
-            //10+20-30, 0 ze gayofa danashtva, if an else shi bevri rame
+            //10+20-30
              //if shi number - 10 >5
              //error ebis povna ara
              //input ar gvaq
@@ -29,10 +40,9 @@ public class InterpreterMain {
             }
             if(lines[i].startsWith("IF ")) {
                 boolean ind = handleIf(lines[i]);
-                if(!ind) {i += 2; bigInd = false;}
+                if(!ind) {mulIfElse = false;}
             }
-            if(lines[i].startsWith("ELSE ") && !bigInd) {bigInd = true; continue;}
-            if(lines[i].startsWith("ELSE ") && bigInd) {
+            if(lines[i].startsWith("ELSE") && mulIfElse) {
                 for(int j = i; j < lines.length; j++) {
                     if(lines[j].startsWith("END ")) {
                         i = j;
@@ -40,14 +50,13 @@ public class InterpreterMain {
                     }
                 }
             }
-            if(lines[i].startsWith("END ")) continue;
             if(lines[i].contains("=")) {
                 handleAssignment(lines[i]);
             }
         }
     }
 
-    private void handleDim(String line) {
+     private void handleDim(String line) {
         String sub = line;
         sub = line.substring(3);
        // String[] parts = line.split("DIM");
@@ -55,61 +64,36 @@ public class InterpreterMain {
         String[] par = sub.split(" AS ");
         map.put(par[0].trim(), 0);
     }
-private boolean handleIf(String line) {
-         if(line.contains(">")) {
-             String[] par = line.split(">");
-             String[] lef = par[0].split("IF");
-             String op = lef[1].trim();
-             String[] rig = par[1].split("THEN");
-             String opana = rig[0].trim();
 
-             int x, y;
-
-             if('0' <= op.charAt(0) && op.charAt(0) <= '9') {
-                 x = Integer.parseInt(op);
-             }
-             else x = map.get(op);
-
-             if('0' <= opana.charAt(0) && opana.charAt(0) <= '9') {
-                 y = Integer.parseInt(opana);
-             }
-             else y = map.get(opana);
-
-             return x > y;
-         }
-        if(line.contains("<")) {
-            String[] par = line.split("<");
-            String[] lef = par[0].split("IF");
-            String op = lef[1].trim();
-            String[] rig = par[1].split("THEN");
-            String opana = rig[0].trim();
-
-            int x, y;
-
-            if('0' <= op.charAt(0) && op.charAt(0) <= '9') {
-                x = Integer.parseInt(op);
-            }
-            else x = map.get(op);
-
-            if('0' <= opana.charAt(0) && opana.charAt(0) <= '9') {
-                y = Integer.parseInt(opana);
-            }
-            else y = map.get(opana);
-
-            return x < y;
-        }
-
-        return false;
-    }
-
-   private void handlePrint(String line) {
+    private void handlePrint(String line) {
         String sub = line;
         sub = line.substring(5).trim();
-        if('0'<= sub.charAt(0) && sub.charAt(0) <='9') {
-            System.out.println(Integer.parseInt(sub));
+        if(sub.contains("+")) {
+            System.out.println(handlePrintBetter(sub,"\\+" ));
+
+        }
+        else if(sub.contains("-")) {
+            System.out.println(handlePrintBetter(sub,"\\-" ));
+
+        }
+        else if(sub.contains("*")) {
+            System.out.println(handlePrintBetter(sub,"\\*" ));
+
+        }
+       else  if(sub.contains("/")) {
+            System.out.println(handlePrintBetter(sub,"\\/" ));
+
+        }
+        else if(sub.contains("MOD")) {
+            System.out.println(handlePrintBetter(sub,"MOD" ));
+
         }
         else {
-            System.out.println(map.get(sub));
+            if ('0' <= sub.charAt(0) && sub.charAt(0) <= '9') {
+                System.out.println(Integer.parseInt(sub));
+            } else {
+                System.out.println(map.get(sub));
+            }
         }
     }
 
@@ -118,16 +102,16 @@ private boolean handleIf(String line) {
         String val = par[0].trim();
         par[1] = par[1].trim();
         if(par[1].contains("+")) {
-            handleA(val, par[1], "\+");
+            handleA(val, par[1], "\\+");
         }
         else if(par[1].contains("-")) {
-            handleA(val, par[1], "\-");
+            handleA(val, par[1], "\\-");
         }
         else if(par[1].contains("/")) {
-            handleA(val, par[1], "\/");
+            handleA(val, par[1], "\\/");
         }
-        else if(par[1].contains("")) {
-            handleA(val, par[1], "\");
+        else if(par[1].contains("*")) {
+            handleA(val, par[1], "\\*");
         }
         else if(par[1].contains("MOD")) {
             handleA(val, par[1], "MOD");
@@ -160,25 +144,104 @@ private boolean handleIf(String line) {
         }
         else y = map.get(rig);
 
-        if(op == "\+") map.put(v, x + y);
-        if(op == "\-") map.put(v, x - y);
-        if(op == "\") map.put(v, x y);
-        if(op == "\%") map.put(v, x / y); // 0
+        if(op == "\\+") map.put(v, x + y);
+        if(op == "\\-") map.put(v, x - y);
+        if(op == "\\*") map.put(v, x * y);
+        if(op == "\\%") map.put(v, x / y); // 0
         if(op == "MOD") map.put(v, x % y); //0
 
     }
 
+    private int handlePrintBetter(String sub, String op) {
+        String[] div = sub.split(op);
+        String lef = div[0].trim();
+        String rig = div[1].trim();
+
+        int x, y;
+
+        if('0' <= lef.charAt(0) && lef.charAt(0) <= '9') {
+            x = Integer.parseInt(lef);
+        }
+        else x = map.get(lef);
+
+        if('0' <= rig.charAt(0) && rig.charAt(0) <= '9') {
+            y = Integer.parseInt(rig);
+        }
+        else y = map.get(rig);
+
+        if(op == "\\/" || op == "MOD") {
+            if (y == 0) {
+                System.out.println("ERROR! DIVISION OR MOD BY 0 NOT ALLOWED");
+                System.exit(0);
+            }
+        }
+
+        int ans = 0;
+
+        if(op == "\\+") ans = x + y;
+        if(op == "\\-") ans = x - y;
+        if(op == "\\/") ans = x / y;
+        if(op == "MOD") ans = x % y;
+        if(op == "\\*") ans = x * y;
+
+        return ans;
+    }
+
+    private boolean handleIf(String line) {
+        if(line.contains(">")) {
+            String[] par = line.split(">");
+            String[] lef = par[0].split("IF");
+            String op = lef[1].trim();
+            String[] rig = par[1].split("THEN");
+            String opana = rig[0].trim();
+
+            int x, y;
+
+            if('0' <= op.charAt(0) && op.charAt(0) <= '9') {
+                x = Integer.parseInt(op);
+            }
+            else x = map.get(op);
+
+            if('0' <= opana.charAt(0) && opana.charAt(0) <= '9') {
+                y = Integer.parseInt(opana);
+            }
+            else y = map.get(opana);
+
+            return x > y;
+        }
+        if(line.contains("<")) {
+            String[] par = line.split("<");
+            String[] lef = par[0].split("IF");
+            String op = lef[1].trim();
+            String[] rig = par[1].split("THEN");
+            String opana = rig[0].trim();
+
+            int x, y;
+
+            if('0' <= op.charAt(0) && op.charAt(0) <= '9') {
+                x = Integer.parseInt(op);
+            }
+            else x = map.get(op);
+
+            if('0' <= opana.charAt(0) && opana.charAt(0) <= '9') {
+                y = Integer.parseInt(opana);
+            }
+            else y = map.get(opana);
+
+            return x < y;
+        }
+
+        return false;
+    }
 
     public static void main(String[] args) {
 
         InterpreterMain interpreter = new InterpreterMain();
 
-        Scanner sc = new Scanner(System.in);
-
         String program = "";
 
-        while(sc.hasNextLine()) {
-            program += sc.nextLine();
+        while(scanner.hasNextLine()) {
+            program += scanner.nextLine();
             program += '\n';
             //press CTRL+D to stop
         }
