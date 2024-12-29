@@ -1,5 +1,3 @@
-package BASICInterpreter;
-
 import java.util.*;
 
 public class InterpreterMain {
