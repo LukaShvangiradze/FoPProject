@@ -52,7 +52,7 @@ public class InterpreterMain {
         sub = line.substring(3);
        // String[] parts = line.split("DIM");
        // String exp = parts[1].trim();
-        String[] par = sub.split("AS");
+        String[] par = sub.split(" AS ");
         map.put(par[0].trim(), 0);
     }
 private boolean handleIf(String line) {
