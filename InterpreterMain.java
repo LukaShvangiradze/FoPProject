@@ -1,15 +1,3 @@
-//FreeBASIC language, based on OneCompiler
-//avoid naming variables keyword names
-//true or false - 1 or 0
-//No data types other than INTEGERS
-//Error and input handling - optional
-//No multiple variables in an expression
-//No NEGATIVE NUMBERS
-//Division is by /
-//Preferred to separate everything with one space exactly
-//NO nested loops
-//NO ELSEIF keyword
-
 import java.util.*;
 
 public class InterpreterMain {
