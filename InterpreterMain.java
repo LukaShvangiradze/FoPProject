@@ -142,22 +142,22 @@ public class InterpreterMain {
         }
     }
 
-        private boolean isHandleWhile(String line){
-            String[] par = line.split("WHILE");
-            if (line.contains(">=")) {
-                String[] div = par[1].split(">=");
+        private boolean isHandleWhile(String line){ // this is the main code that handles the WHILE LOOP
+            String[] par = line.split("WHILE"); // par[0] contains nothing useful
+            if (line.contains(">=")) { // case for ">="
+                String[] div = par[1].split(">="); // we split up the code into 2 parts
                 int x, y;
                 div[0] = div[0].trim();
                 div[1] = div[1].trim();
-                if (('0' <= div[0].charAt(0) && div[0].charAt(0) <= '9') || div[0].charAt(0) == '-') {
+                if (('0' <= div[0].charAt(0) && div[0].charAt(0) <= '9') || div[0].charAt(0) == '-') { // with this, we verify if our input is a number or a variable for the left side
                     x = Integer.parseInt(div[0]);
-                } else x = map.get(div[0]);
-                if (('0' <= div[1].charAt(0) && div[1].charAt(0) <= '9') || div[1].charAt(0) == '-') {
+                } else x = map.get(div[0]); // case for a variable
+                if (('0' <= div[1].charAt(0) && div[1].charAt(0) <= '9') || div[1].charAt(0) == '-') { // the same for the right side
                     y = Integer.parseInt(div[1]);
                 } else y = map.get(div[1]);
                 return x >= y;
 
-            } else if (line.contains("<=")) {
+            } else if (line.contains("<=")) { // case for <=, contains the same operations as the other conditions
                 String[] div = par[1].split("<=");
                 int x, y;
                 div[0] = div[0].trim();
@@ -169,7 +169,7 @@ public class InterpreterMain {
                     y = Integer.parseInt(div[1]);
                 } else y = map.get(div[1]);
                 return x <= y;
-            } else if (line.contains("=")) {
+            } else if (line.contains("=")) { // case for =, contains the same operations as the other conditions
                 String[] div = par[1].split("=");
                 int x, y;
                 div[0] = div[0].trim();
@@ -181,7 +181,7 @@ public class InterpreterMain {
                     y = Integer.parseInt(div[1]);
                 } else y = map.get(div[1]);
                 return x == y;
-            } else if (line.contains("<>")) {
+            } else if (line.contains("<>")) { // case for <>, contains the same operations as the other conditions, this checks inequality
                 String[] div = par[1].split("<>");
                 int x, y;
                 div[0] = div[0].trim();
@@ -193,7 +193,7 @@ public class InterpreterMain {
                     y = Integer.parseInt(div[1]);
                 } else y = map.get(div[1]);
                 return x != y;
-            } else if (line.contains("<")) {
+            } else if (line.contains("<")) { // case for <, contains the same operations as the other conditions
                 String[] div = par[1].split("<");
                 int x, y;
                 div[0] = div[0].trim();
@@ -205,7 +205,7 @@ public class InterpreterMain {
                     y = Integer.parseInt(div[1]);
                 } else y = map.get(div[1]);
                 return x < y;
-            } else if (line.contains(">")) {
+            } else if (line.contains(">")) { // case for <=, contains the same operations as the other conditions
                 String[] div = par[1].split(">");
                 int x, y;
                 div[0] = div[0].trim();
@@ -224,16 +224,16 @@ public class InterpreterMain {
         }
 
 
-    private void handleDim(String line) {
+    private void handleDim(String line) { // used for handling DIM operation
         String sub = line;
         sub = line.substring(3);
-        String[] par = sub.split(" AS ");
-        map.put(par[0].trim(), 0);
+        String[] par = sub.split(" AS "); // since " AS " can never have a duplicate, and must be in the DIM line, we used that to split
+        map.put(par[0].trim(), 0); // par[0] stores the name of the variable, since Integers are always 0 from start
     }
 
-    private void handlePrint(String line) {
+    private void handlePrint(String line) { // used for handling the PRINT operation
         String sub = line;
-        sub = line.substring(5).trim();
+        sub = line.substring(5).trim(); // we are trying to single out the "PRINT" and remove it
 
         if (sub.contains("+")) {
             System.out.println(handlePrintBetter(sub, "\\+"));
@@ -257,6 +257,7 @@ public class InterpreterMain {
                 System.out.println(map.get(sub));
             }
         }
+        // these are cases for the different expressions PRINT might include
     }
 
     private void handleAssignment(String line) {
@@ -309,22 +310,22 @@ public class InterpreterMain {
     }
 
 
-    private int handlePrintBetter(String sub, String op) {
-        String[] div = sub.split(op);
+    private int handlePrintBetter(String sub, String op) { // only computes expression for 1 equasion
+        String[] div = sub.split(op); // splits up the incomming expression by the operation itself
         String lef = div[0].trim();
         String rig = div[1].trim();
 
         int x, y;
 
-        if (('0' <= lef.charAt(0) && lef.charAt(0) <= '9') || lef.charAt(0) == '-') {
+        if (('0' <= lef.charAt(0) && lef.charAt(0) <= '9') || lef.charAt(0) == '-') { // if the left side is a variable
             x = Integer.parseInt(lef);
         } else x = map.get(lef);
 
-        if (('0' <= rig.charAt(0) && rig.charAt(0) <= '9') || rig.charAt(0) == '-') {
+        if (('0' <= rig.charAt(0) && rig.charAt(0) <= '9') || rig.charAt(0) == '-') { // if the right side is a variable
             y = Integer.parseInt(rig);
         } else y = map.get(rig);
 
-        if (op == "\\/" || op == "MOD") {
+        if (op == "\\/" || op == "MOD") { // checks if we devide by 0
             if (y == 0) {
                 System.out.println("ERROR! DIVISION OR MOD BY 0 NOT ALLOWED");
                 System.exit(0);
@@ -338,7 +339,7 @@ public class InterpreterMain {
         if (op == "\\-") ans = x - y;
         if (op == "\\/") ans = x / y;
         if (op == "MOD") ans = x % y;
-        if (op == "\\*") ans = x * y;
+        if (op == "\\*") ans = x * y; // different cases for different outputs (what we are looking for)
 
         return ans;
     }
