@@ -42,7 +42,7 @@ public class InterpreterMain {
                 gen = dev[1].trim();
                 String lef = div[0].trim();
                 String rig = div[1].trim();
-                if('0'<= lef.charAt(0) && lef.charAt(0) <= '9') {
+                if(('0'<= lef.charAt(0) && lef.charAt(0) <= '9') || lef.charAt(0) == '-') {
                     x = Integer.parseInt(lef);
                     map.put(gen, x);
                 }
@@ -50,7 +50,7 @@ public class InterpreterMain {
                     x = map.get(lef);
                     map.put(gen, x);
                 }
-                if('0'<= rig.charAt(0) && rig.charAt(0) <= '9') {
+                if(('0'<= rig.charAt(0) && rig.charAt(0) <= '9') || rig.charAt(0) == '-') {
                     y = Integer.parseInt(rig);
                 }
                 else y = map.get(rig);
@@ -121,18 +121,18 @@ public class InterpreterMain {
         }
     }
 
-     private boolean isHandleWhile(String line) {
+    private boolean isHandleWhile(String line) {
         String[] par = line.split("WHILE");
         if(line.contains(">=")) {
             String[] div = par[1].split(">=");
             int x, y;
             div[0] = div[0].trim();
             div[1] = div[1].trim();
-            if('0'<= div[0].charAt(0) && div[0].charAt(0) <= '9') {
+            if(('0'<= div[0].charAt(0) && div[0].charAt(0) <= '9') || div[0].charAt(0) == '-') {
                 x = Integer.parseInt(div[0]);
             }
             else x = map.get(div[0]);
-            if('0'<= div[1].charAt(0) && div[1].charAt(0) <= '9') {
+            if(('0'<= div[1].charAt(0) && div[1].charAt(0) <= '9') || div[1].charAt(0)=='-') {
                 y = Integer.parseInt(div[1]);
             }
             else y = map.get(div[1]);
@@ -144,11 +144,11 @@ public class InterpreterMain {
             int x, y;
             div[0] = div[0].trim();
             div[1] = div[1].trim();
-            if('0'<= div[0].charAt(0) && div[0].charAt(0) <= '9') {
+            if(('0'<= div[0].charAt(0) && div[0].charAt(0) <= '9') || div[0].charAt(0) == '-') {
                 x = Integer.parseInt(div[0]);
             }
             else x = map.get(div[0]);
-            if('0'<= div[1].charAt(0) && div[1].charAt(0) <= '9') {
+            if(('0'<= div[1].charAt(0) && div[1].charAt(0) <= '9') || div[1].charAt(0)=='-') {
                 y = Integer.parseInt(div[1]);
             }
             else y = map.get(div[1]);
@@ -159,11 +159,11 @@ public class InterpreterMain {
             int x, y;
             div[0] = div[0].trim();
             div[1] = div[1].trim();
-            if('0'<= div[0].charAt(0) && div[0].charAt(0) <= '9') {
+            if(('0'<= div[0].charAt(0) && div[0].charAt(0) <= '9') || div[0].charAt(0) == '-') {
                 x = Integer.parseInt(div[0]);
             }
             else x = map.get(div[0]);
-            if('0'<= div[1].charAt(0) && div[1].charAt(0) <= '9') {
+            if(('0'<= div[1].charAt(0) && div[1].charAt(0) <= '9') || div[1].charAt(0)=='-') {
                 y = Integer.parseInt(div[1]);
             }
             else y = map.get(div[1]);
@@ -174,11 +174,11 @@ public class InterpreterMain {
             int x, y;
             div[0] = div[0].trim();
             div[1] = div[1].trim();
-            if('0'<= div[0].charAt(0) && div[0].charAt(0) <= '9') {
+            if(('0'<= div[0].charAt(0) && div[0].charAt(0) <= '9') || div[0].charAt(0) == '-') {
                 x = Integer.parseInt(div[0]);
             }
             else x = map.get(div[0]);
-            if('0'<= div[1].charAt(0) && div[1].charAt(0) <= '9') {
+            if(('0'<= div[1].charAt(0) && div[1].charAt(0) <= '9') || div[1].charAt(0)=='-') {
                 y = Integer.parseInt(div[1]);
             }
             else y = map.get(div[1]);
@@ -189,11 +189,11 @@ public class InterpreterMain {
             int x, y;
             div[0] = div[0].trim();
             div[1] = div[1].trim();
-            if('0'<= div[0].charAt(0) && div[0].charAt(0) <= '9') {
+            if(('0'<= div[0].charAt(0) && div[0].charAt(0) <= '9') || div[0].charAt(0) == '-') {
                 x = Integer.parseInt(div[0]);
             }
             else x = map.get(div[0]);
-            if('0'<= div[1].charAt(0) && div[1].charAt(0) <= '9') {
+            if(('0'<= div[1].charAt(0) && div[1].charAt(0) <= '9') || div[1].charAt(0)=='-') {
                 y = Integer.parseInt(div[1]);
             }
             else y = map.get(div[1]);
@@ -204,11 +204,11 @@ public class InterpreterMain {
             int x, y;
             div[0] = div[0].trim();
             div[1] = div[1].trim();
-            if('0'<= div[0].charAt(0) && div[0].charAt(0) <= '9') {
+            if(('0'<= div[0].charAt(0) && div[0].charAt(0) <= '9') || div[0].charAt(0) == '-') {
                 x = Integer.parseInt(div[0]);
             }
             else x = map.get(div[0]);
-            if('0'<= div[1].charAt(0) && div[1].charAt(0) <= '9') {
+            if(('0'<= div[1].charAt(0) && div[1].charAt(0) <= '9') || div[1].charAt(0)=='-') {
                 y = Integer.parseInt(div[1]);
             }
             else y = map.get(div[1]);
@@ -226,14 +226,15 @@ public class InterpreterMain {
         map.put(par[0].trim(), 0);
     }
 
-private void handlePrint(String line) {
+    private void handlePrint(String line) {
         String sub = line;
         sub = line.substring(5).trim();
+
         if(sub.contains("+")) {
             System.out.println(handlePrintBetter(sub,"\\+" ));
 
         }
-        else if(sub.contains("-")) {
+        else if(sub.contains("-") && sub.charAt(0)!='-') {
             System.out.println(handlePrintBetter(sub,"\\-" ));
 
         }
@@ -250,7 +251,7 @@ private void handlePrint(String line) {
 
         }
         else {
-            if ('0' <= sub.charAt(0) && sub.charAt(0) <= '9') {
+            if (('0' <= sub.charAt(0) && sub.charAt(0) <= '9') || sub.charAt(0) == '-') {
                 System.out.println(Integer.parseInt(sub));
             } else {
                 System.out.println(map.get(sub));
@@ -279,7 +280,7 @@ private void handlePrint(String line) {
         }
         else {
 
-            if('0' <= par[1].charAt(0) && par[1].charAt(0) <= '9') {
+            if(('0' <= par[1].charAt(0) && par[1].charAt(0) <= '9') || par[1].charAt(0) == '-') {
                 map.put(val, Integer.parseInt(par[1]));
             }
             else {
@@ -296,12 +297,12 @@ private void handlePrint(String line) {
 
         int x, y;
 
-        if('0' <= lef.charAt(0) && lef.charAt(0) <= '9') {
+        if(('0' <= lef.charAt(0) && lef.charAt(0) <= '9') || lef.charAt(0) == '-') {
             x = Integer.parseInt(lef);
         }
         else x = map.get(lef);
 
-        if('0' <= rig.charAt(0) && rig.charAt(0) <= '9') {
+        if(('0' <= rig.charAt(0) && rig.charAt(0) <= '9') || rig.charAt(0) == '-') {
             y = Integer.parseInt(rig);
         }
         else y = map.get(rig);
@@ -314,19 +315,19 @@ private void handlePrint(String line) {
 
     }
 
-private int handlePrintBetter(String sub, String op) {
+    private int handlePrintBetter(String sub, String op) {
         String[] div = sub.split(op);
         String lef = div[0].trim();
         String rig = div[1].trim();
 
         int x, y;
 
-        if('0' <= lef.charAt(0) && lef.charAt(0) <= '9') {
+        if(('0' <= lef.charAt(0) && lef.charAt(0) <= '9') || lef.charAt(0) == '-') {
             x = Integer.parseInt(lef);
         }
         else x = map.get(lef);
 
-        if('0' <= rig.charAt(0) && rig.charAt(0) <= '9') {
+        if(('0' <= rig.charAt(0) && rig.charAt(0) <= '9') || rig.charAt(0) == '-') {
             y = Integer.parseInt(rig);
         }
         else y = map.get(rig);
@@ -359,12 +360,12 @@ private int handlePrintBetter(String sub, String op) {
 
             int x, y;
 
-            if('0' <= op.charAt(0) && op.charAt(0) <= '9') {
+            if(('0' <= op.charAt(0) && op.charAt(0) <= '9') || op.charAt(0) == '-') {
                 x = Integer.parseInt(op);
             }
             else x = map.get(op);
 
-            if('0' <= opana.charAt(0) && opana.charAt(0) <= '9') {
+            if(('0' <= opana.charAt(0) && opana.charAt(0) <= '9') || opana.charAt(0) == '-') {
                 y = Integer.parseInt(opana);
             }
             else y = map.get(opana);
@@ -380,12 +381,12 @@ private int handlePrintBetter(String sub, String op) {
 
             int x, y;
 
-            if('0' <= op.charAt(0) && op.charAt(0) <= '9') {
+            if(('0' <= op.charAt(0) && op.charAt(0) <= '9') || op.charAt(0) == '-') {
                 x = Integer.parseInt(op);
             }
             else x = map.get(op);
 
-            if('0' <= opana.charAt(0) && opana.charAt(0) <= '9') {
+            if(('0' <= opana.charAt(0) && opana.charAt(0) <= '9') || opana.charAt(0) == '-') {
                 y = Integer.parseInt(opana);
             }
             else y = map.get(opana);
@@ -401,12 +402,12 @@ private int handlePrintBetter(String sub, String op) {
 
             int x, y;
 
-            if('0' <= op.charAt(0) && op.charAt(0) <= '9') {
+            if(('0' <= op.charAt(0) && op.charAt(0) <= '9') || op.charAt(0) == '-') {
                 x = Integer.parseInt(op);
             }
             else x = map.get(op);
 
-            if('0' <= opana.charAt(0) && opana.charAt(0) <= '9') {
+            if(('0' <= opana.charAt(0) && opana.charAt(0) <= '9') || opana.charAt(0) == '-') {
                 y = Integer.parseInt(opana);
             }
             else y = map.get(opana);
@@ -422,12 +423,12 @@ private int handlePrintBetter(String sub, String op) {
 
             int x, y;
 
-            if('0' <= op.charAt(0) && op.charAt(0) <= '9') {
+            if(('0' <= op.charAt(0) && op.charAt(0) <= '9') || op.charAt(0) == '-') {
                 x = Integer.parseInt(op);
             }
             else x = map.get(op);
 
-            if('0' <= opana.charAt(0) && opana.charAt(0) <= '9') {
+            if(('0' <= opana.charAt(0) && opana.charAt(0) <= '9') || opana.charAt(0) == '-') {
                 y = Integer.parseInt(opana);
             }
             else y = map.get(opana);
@@ -443,12 +444,12 @@ private int handlePrintBetter(String sub, String op) {
 
             int x, y;
 
-            if('0' <= op.charAt(0) && op.charAt(0) <= '9') {
+            if(('0' <= op.charAt(0) && op.charAt(0) <= '9') || op.charAt(0) == '-') {
                 x = Integer.parseInt(op);
             }
             else x = map.get(op);
 
-            if('0' <= opana.charAt(0) && opana.charAt(0) <= '9') {
+            if(('0' <= opana.charAt(0) && opana.charAt(0) <= '9') || opana.charAt(0) == '-') {
                 y = Integer.parseInt(opana);
             }
             else y = map.get(opana);
@@ -464,12 +465,12 @@ private int handlePrintBetter(String sub, String op) {
 
             int x, y;
 
-            if('0' <= op.charAt(0) && op.charAt(0) <= '9') {
+            if(('0' <= op.charAt(0) && op.charAt(0) <= '9') || op.charAt(0) == '-') {
                 x = Integer.parseInt(op);
             }
             else x = map.get(op);
 
-            if('0' <= opana.charAt(0) && opana.charAt(0) <= '9') {
+            if(('0' <= opana.charAt(0) && opana.charAt(0) <= '9') || opana.charAt(0) == '-') {
                 y = Integer.parseInt(opana);
             }
             else y = map.get(opana);
