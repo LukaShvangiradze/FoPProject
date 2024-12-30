@@ -1,3 +1,5 @@
+#Algorithms written in FreeBASIC which our Interpreter can execute
+
 1. Sum of First N Numbers
 	•	Description: Calculate the sum of the first N natural numbers using loop.
 	•	Example:
@@ -10,13 +12,14 @@ DIM N AS INTEGER
 DIM sum AS INTEGER
 DIM i AS INTEGER
 
+N = 10
 sum = 0
+i = 1
 
-INPUT N
-
-FOR i = 1 TO N
+WHILE i <= N
     sum = sum + i
-NEXT i
+    i = i + 1
+WEND
 
 PRINT sum
 ------------------------------------------------------------------------------------------------------------------------------------
@@ -29,18 +32,19 @@ PRINT sum
 Code:
 
 DIM N AS INTEGER
-DIM fact AS LONGINT
+DIM factorial AS INTEGER
 DIM i AS INTEGER
 
-fact = 1
+N = 5
+factorial = 1
+i = 1
 
-INPUT N
+WHILE i <= N
+    factorial = factorial * i
+    i = i + 1
+WEND
 
-FOR i = 1 TO N
-    fact = fact * i
-NEXT i
-
-PRINT fact
+PRINT factorial
 
 ------------------------------------------------------------------------------------------------------------------------------------
 3. GCD of Two Numbers
@@ -51,20 +55,21 @@ PRINT fact
 
 Code: 
 
-DIM a AS INTEGER, 
+DIM a AS INTEGER
 DIM b AS INTEGER
-DIM emp AS INTEGER
 
-INPUT a
-INPUT b
+a = 48
+b = 18
 
-WHILE b != 0
+WHILE b <> 0
+    DIM temp AS INTEGER
     temp = b
     b = a MOD b
     a = temp
 WEND
 
 PRINT a
+
 
 ------------------------------------------------------------------------------------------------------------------------------------
 4. Reverse a Number
@@ -75,36 +80,21 @@ PRINT a
 
 Code:
 
+DIM num AS INTEGER
+DIM reversed AS INTEGER
+DIM remainder AS INTEGER
 
+num = 1234
+reversed = 0
 
-
-DIM a AS INTEGER, 
-DIM b AS INTEGER
-DIM emp AS INTEGER
-
-INPUT a
-INPUT b
-
-WHILE b != 0
-    temp = b
-    b = a MOD b
-    a = temp
+WHILE num > 0
+    remainder = num MOD 10
+    reversed = reversed * 10 
+    reversed = reversed + remainder
+    num = num / 10
 WEND
 
-PRINT a
-DIM N AS INTEGER
-DIM factorial AS LONGINT 
-
-INPUT N 
-
-factorial = 1
-
-WHILE N > 0
-    factorial = factorial * N
-    N = N - 1
-WEND
-
-PRINT factorial
+PRINT reversed
 
 ------------------------------------------------------------------------------------------------------------------------------------
 5. Check if a Number is Prime
@@ -115,6 +105,33 @@ PRINT factorial
 
 Code:
 
+DIM N AS INTEGER
+DIM isPrime AS INTEGER
+DIM i AS INTEGER
+
+N = 13
+isPrime = 1 
+
+DIM j AS INTEGER
+
+j = N - 1
+
+FOR i = 2 TO j
+    DIM x AS INTEGER
+    x = N MOD i
+    IF x = 0 THEN
+        isPrime = 0
+    END IF
+NEXT i
+
+DIM ans AS INTEGER
+
+IF isPrime = 1 THEN
+    ans = 1
+END IF
+
+PRINT ans
+
 ------------------------------------------------------------------------------------------------------------------------------------
 6. Check if a Number is Palindrome
 	•	Description: Check if an integer reads the same backward and forward.
@@ -123,6 +140,30 @@ Code:
           Output: True
 
 Code:
+
+DIM num AS INTEGER
+DIM reversed AS INTEGER
+DIM original AS INTEGER
+DIM remainder AS INTEGER
+
+num = 121
+original = num
+reversed = 0
+
+WHILE num > 0
+    remainder = num MOD 10
+    reversed = reversed * 10 
+    reversed = reversed + remainder
+    num = num / 10
+WEND
+
+DIM ans AS INTEGER
+
+IF original = reversed THEN
+    ans = 1
+END IF
+
+PRINT ans
 
 ------------------------------------------------------------------------------------------------------------------------------------
 7. Find the Largest Digit in a Number
@@ -133,6 +174,23 @@ Code:
 
 Code:
 
+DIM num AS INTEGER
+DIM largestDigit AS INTEGER
+DIM remainder AS INTEGER
+
+num = 3947
+largestDigit = 0
+
+WHILE num > 0
+    remainder = num MOD 10
+    IF remainder > largestDigit THEN
+        largestDigit = remainder
+    END IF
+    num = num / 10
+WEND
+
+PRINT largestDigit
+
 ------------------------------------------------------------------------------------------------------------------------------------
 8. Sum of Digits
 	•	Description: Calculate the sum of the digits of a number.
@@ -141,6 +199,21 @@ Code:
           Output: 10
 
 Code:
+
+DIM num AS INTEGER
+DIM sum AS INTEGER
+DIM remainder AS INTEGER
+
+num = 1234
+sum = 0
+
+WHILE num > 0
+    remainder = num MOD 10
+    sum = sum + remainder
+    num = num / 10
+WEND
+
+PRINT sum
 
 ------------------------------------------------------------------------------------------------------------------------------------
 9. Multiplication Table
@@ -162,6 +235,15 @@ Code:
 
 Code:
 
+DIM num AS INTEGER
+DIM i AS INTEGER
+
+num = 5
+
+FOR i = 1 TO 10
+    PRINT num * i
+NEXT i
+
 ------------------------------------------------------------------------------------------------------------------------------------
 10. Nth Fibonacci Number
 	•	Description: Compute the Nth Fibonacci number using iteration or recursion.
@@ -170,3 +252,21 @@ Code:
           Output: 34
 
 Code:
+
+DIM N AS INTEGER
+DIM a AS INTEGER
+DIM b AS INTEGER
+DIM fib AS INTEGER
+DIM i AS INTEGER
+
+N = 10
+a = 0
+b = 1
+
+FOR i = 3 TO N
+    fib = a + b
+    a = b
+    b = fib
+NEXT i
+
+PRINT b
