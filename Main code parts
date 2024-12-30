@@ -3,34 +3,60 @@ import java.util.*;
 public class BASICinterpreter {
     private static Scanner codeINPUT = new Scanner(System.in); // the main code we will have
     private static Map<String, Integer> varibaleSTORAGE = new HashMap<>(); // this stores our variables with DIM (We only use Integer values)
+    private static boolean IFresult = true;
 
     public void lineOperation(String code){
         String[] line = code.split("\n");
 
         for (int PC = 0; PC < line.length; PC++){
             line[PC] = line[PC].trim();
-            if (line[PC].isEmpty()) continue;
+            if(IFresult) {
+                if (line[PC].isEmpty()) continue;
 
-            if (line[PC].startsWith("DIM ")){
-                variableAssignment(line[PC]);
-            } else if (line[PC].startsWith("IF ")) {
-                
-            } else if (line[PC].startsWith("WHILE ")) {
+                if (line[PC].startsWith("DIM ")) {
+                    String current = line[PC].substring(3);
+                    if(current.endsWith(" INTEGER")){
+                        String[] par = current.split(" AS ");
+                        varibaleSTORAGE.put(par[0].trim(), 0);
+                    }
+                } else if (line[PC].startsWith("IF ")) {
+//                    line[PC] = line[PC].substring(2, line[PC].length() - 4).trim();
+//                    IFresult = booleanOperation(line[PC]);
+                } else if (line[PC].startsWith("WHILE ")) {
 
-            } else if (line[PC].startsWith("FOR ")) {
+                } else if (line[PC].startsWith("FOR ")) {
 
+                }
             }
         }
     }
 
-    private static void variableAssignment(String currentLine){
-        String current = currentLine;
-        if(current.charAt(current.length() - 1) == 'R'){
-            current = current.substring(3);
-            String[] par = current.split(" AS ");
-            varibaleSTORAGE.put(par[0].trim(), 0);
-        }
+    private static void IFhandler(String input){
     }
+
+    private static boolean booleanOperation(String input){
+        boolean result = false;
+        String boolOperations = ("(==|>=|<=|<>|>|<)");
+        String[] sides = input.split(boolOperations);
+        String leftSide = sides[0].trim();
+        String rightSide = sides[1].trim(); //couldn't figure out a better option to split them
+        String operation = input.substring(leftSide.length(), input.length() - rightSide.length()).trim();
+        int leftValue, rightValue;
+        leftValue = formula(leftSide);
+        rightValue = formula(rightSide);
+
+        switch(operation){
+            case ">=": result = leftValue >= rightValue; break;
+            case "<=": result = leftValue <= rightValue; break;
+            case "==": result = leftValue == rightValue; break;
+            case "<>": result = leftValue > rightValue || leftValue < rightValue; break;
+            case ">": result = leftValue > rightValue; break;
+            case "<": result = leftValue < rightValue; break;
+            default: throw new IllegalArgumentException("Invalid boolean operation: " + operation);
+        }
+        return result;
+    }
+
     private static int formula (String input) { // input will only contain MOD, operations, and integers, variables
         input = input.replace(" MOD ", " % "); // in a formula, in freeBASIC we use MOD instead of %
         Stack<Integer> value = new Stack<>(); // value holder
@@ -58,7 +84,6 @@ public class BASICinterpreter {
         while (!operation.empty()) {
             value.push(applyOperation(operation.pop(), value.pop(), value.pop()));
         }
-
         return value.pop();
     }
     private static boolean isOperator(char c) {
@@ -70,25 +95,19 @@ public class BASICinterpreter {
     private static boolean moreValue(char first, char second){ // if the first input has more "value" than second, then it results in true
         if ((first == '*' || first == '/' || first == '%') && (second == '+' || second == '-')) {
             return false;
-        } else {
-            return true;
-        }
+        } else { return true;}
     }
     public static int applyOperation(char op, int b, int a) { // does the operations
         switch (op) {
-            case '+':
-                return a + b;
-            case '-':
-                return a - b;
-            case '*':
-                return a * b;
+            case '+': return a + b;
+            case '-': return a - b;
+            case '*': return a * b;
             case '/':
                 if (b == 0) {
                     throw new UnsupportedOperationException("Cannot divide by zero");
                 }
                 return a / b;
-            case '%':
-                return a % b;
+            case '%': return a % b;
         }
         return 0;
     }
