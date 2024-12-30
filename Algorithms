@@ -122,7 +122,7 @@ FOR i = 2 TO j
     IF x = 0 THEN
         isPrime = 0
     END IF
-NEXT
+NEXT i
 
 DIM ans AS INTEGER
 
