@@ -31,7 +31,7 @@ public class InterpreterMain {
                 String lef = div[0].trim();
                 String rig = div[1].trim();
                 if(('0'<= lef.charAt(0) && lef.charAt(0) <= '9') || lef.charAt(0) == '-') { //if it is number
-                    x = Integer.parseInt(lef);  //
+                    x = Integer.parseInt(lef);  
                     map.put(gen, x); 
                 }
                 else {  // if it is variable
@@ -41,7 +41,7 @@ public class InterpreterMain {
                 if(('0'<= rig.charAt(0) && rig.charAt(0) <= '9') || rig.charAt(0) == '-') {
                     y = Integer.parseInt(rig);  // Loop limit
                 }
-                else y = map.get(rig);
+                else y = map.get(rig); 
 
                 if(x > y) {  // Skip loop if start > end
                     for (int j = i; j < lines.length; j++) {
