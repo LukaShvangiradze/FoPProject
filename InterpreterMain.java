@@ -2,51 +2,51 @@ import java.util.*;
 
 public class InterpreterMain {
 
-    private static Scanner scanner = new Scanner(System.in);
+    private static Scanner scanner = new Scanner(System.in); 
 
-    private static Map<String, Integer> map = new HashMap<>();
+    private static Map<String, Integer> map = new HashMap<>(); // Variable storage
 
     private static boolean mulIfElse = true;
 
-    private static int ind;
+    private static int ind; // Stores index for While loop
 
-    private static int ind2;
+    private static int ind2; // Stores index for For loop
 
-    private static int x, y;
+    private static int x, y; // Temporary variables for calculations
 
-    private static String gen;
+    private static String gen;  // Variable name in FOR loop
 
     public void eval(String code) {
-        String[] lines = code.split("\n");
+        String[] lines = code.split("\n"); // Split code into lines
         for (int i = 0; i < lines.length; i++) {
-            lines[i] = lines[i].trim();
-            if (lines[i].isEmpty()) continue;
+            lines[i] = lines[i].trim(); // Remove leading and trailing spaces
+            if (lines[i].isEmpty()) continue; // Skip empty lines
 
-            else if(lines[i].startsWith("FOR ")) {
+            else if(lines[i].startsWith("FOR ")) { // Handle FOR loops
                 ind2 = i;
-                String[] par = lines[i].split("=");
+                String[] par = lines[i].split("="); 
                 String[] div = par[1].split("TO");
                 String[] dev = par[0].split("FOR");
                 gen = dev[1].trim();
                 String lef = div[0].trim();
                 String rig = div[1].trim();
-                if(('0'<= lef.charAt(0) && lef.charAt(0) <= '9') || lef.charAt(0) == '-') {
-                    x = Integer.parseInt(lef);
-                    map.put(gen, x);
+                if(('0'<= lef.charAt(0) && lef.charAt(0) <= '9') || lef.charAt(0) == '-') { //if it is number
+                    x = Integer.parseInt(lef);  //
+                    map.put(gen, x); 
                 }
-                else {
-                    x = map.get(lef);
+                else {  // if it is variable
+                    x = map.get(lef); 
                     map.put(gen, x);
                 }
                 if(('0'<= rig.charAt(0) && rig.charAt(0) <= '9') || rig.charAt(0) == '-') {
-                    y = Integer.parseInt(rig);
+                    y = Integer.parseInt(rig);  // Loop limit
                 }
                 else y = map.get(rig);
 
-                if(x > y) {
+                if(x > y) {  // Skip loop if start > end
                     for (int j = i; j < lines.length; j++) {
                         if (lines[j].startsWith("NEXT ")) {
-                            i = j;
+                            i = j;  // we move to the line where the for loop ends
                             break;
                         }
                     }
@@ -54,12 +54,12 @@ public class InterpreterMain {
 
             }
 
-            else if(lines[i].startsWith("NEXT ")) {
-                map.put(gen, ++x);
+            else if(lines[i].startsWith("NEXT ")) {  // Handle NEXT in FOR loops
+                map.put(gen, ++x); // Increment loop variable
                 if(x <= y) {
-                    i = ind2;
+                    i = ind2;   // Repeat loop , We return to the line where the FOR loop starts
                 }
-                else continue;
+                else continue; // If the loop variable exceeds the loop limit, we terminate the current FOR loop and proceed to the next line of code.
             }
 
             else if (lines[i].startsWith("WHILE ")) {
@@ -67,7 +67,7 @@ public class InterpreterMain {
                 if (isHandleWhile(lines[ind])) {
                     continue;
                 }
-                for (int j = i; j < lines.length; j++) {
+                for (int j = i; j < lines.length; j++) { //If the WHILE loop condition is false, we move to the line where the loop end
                     if (lines[j].startsWith("WEND")) {
                         i = j;
                         break;
@@ -76,7 +76,7 @@ public class InterpreterMain {
 
             } else if (lines[i].startsWith("WEND")) {
                 if (isHandleWhile(lines[ind])) {
-                    i = ind;
+                    i = ind; // reapet loop
                 }
                 else continue;
             } else if (lines[i].startsWith("END ")) {
