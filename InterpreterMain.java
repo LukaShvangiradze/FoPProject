@@ -74,38 +74,77 @@ public class InterpreterMain {
                     }
                 }
 
-            } else if (lines[i].startsWith("WEND")) {
-                if (isHandleWhile(lines[ind])) {
-                    i = ind; // reapet loop
-                }
-                else continue;
-            } else if (lines[i].startsWith("END ")) {
-                mulIfElse = true;
-                continue;
-            } else if (lines[i].startsWith("ELSE") && !mulIfElse) {
-                mulIfElse = true;
-                continue;
-            } else if (!mulIfElse) continue;
+            else if(lines[i].startsWith("NEXT ")) {  // Handle NEXT in FOR loops
+    map.put(gen, ++x); // Increment loop variable
+    if(x <= y) {
+        i = ind2;   // Repeat loop, return to FOR loop start
+    }
+    else continue; // Exit loop if variable exceeds limit
+}
 
-            else if (lines[i].startsWith("DIM ")) {
-                handleDim(lines[i]);
-            } else if (lines[i].startsWith("PRINT ")) {
-                handlePrint(lines[i]);
-            } else if (lines[i].startsWith("IF ")) {
-                boolean ind = handleIf(lines[i]);
-                if (!ind) {
-                    mulIfElse = false;
-                }
-            } else if (lines[i].startsWith("ELSE") && mulIfElse) {
-                for (int j = i; j < lines.length; j++) {
-                    if (lines[j].startsWith("END ")) {
-                        i = j;
-                        break;
-                    }
-                }
-            } else if (lines[i].contains("=")) {
-                handleAssignment(lines[i]);
-            }
+// Handle WHILE loops - store current line index and check condition
+else if (lines[i].startsWith("WHILE ")) {
+    ind = i;
+    if (isHandleWhile(lines[ind])) { // If condition is true, continue execution
+        continue;
+    }
+    // If condition is false, skip to end of loop
+    for (int j = i; j < lines.length; j++) {
+        if (lines[j].startsWith("WEND")) {
+            i = j;
+            break;
+        }
+    }
+
+// Handle end of WHILE loop
+} else if (lines[i].startsWith("WEND")) {
+    if (isHandleWhile(lines[ind])) {
+        i = ind; 
+    }
+    else continue; 
+
+// Handle END statement in IF-ELSE blocks
+} else if (lines[i].startsWith("END ")) {
+    mulIfElse = true; 
+    continue;
+
+// Handle ELSE statement when previous IF was false
+} else if (lines[i].startsWith("ELSE") && !mulIfElse) {
+    mulIfElse = true; 
+    continue;
+
+// Skip execution if in false branch of IF-ELSE
+} else if (!mulIfElse) continue;
+
+// Handle variable declaration (DIM statement)
+else if (lines[i].startsWith("DIM ")) {
+    handleDim(lines[i]);
+
+// Handle PRINT statement for output
+} else if (lines[i].startsWith("PRINT ")) {
+    handlePrint(lines[i]);
+
+// Handle IF statement and its condition
+} else if (lines[i].startsWith("IF ")) {
+    boolean ind = handleIf(lines[i]);
+    if (!ind) {
+        mulIfElse = false; // Mark IF condition as false
+    }
+
+// Handle ELSE statement when previous IF was true
+} else if (lines[i].startsWith("ELSE") && mulIfElse) {
+    // Skip to END statement since IF was true
+    for (int j = i; j < lines.length; j++) {
+        if (lines[j].startsWith("END ")) {
+            i = j;
+            break;
+        }
+    }
+
+// Handle variable assignment (contains '=')
+} else if (lines[i].contains("=")) {
+    handleAssignment(lines[i]);
+}
         }
     }
 
