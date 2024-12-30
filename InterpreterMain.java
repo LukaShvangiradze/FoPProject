@@ -1,37 +1,69 @@
 import java.util.*;
 
 public class BASICinterpreter {
+    private static Scanner scanner = new Scanner(System.in); // the input code area
     private static Scanner codeINPUT = new Scanner(System.in); // the main code we will have
     private static Map<String, Integer> varibaleSTORAGE = new HashMap<>(); // this stores our variables with DIM (We only use Integer values)
-    private static boolean IFresult = true;
 
     public void lineOperation(String code){
         String[] line = code.split("\n");
 
         for (int PC = 0; PC < line.length; PC++){
             line[PC] = line[PC].trim();
-            if(IFresult) {
-                if (line[PC].isEmpty()) continue;
+            if (line[PC].isEmpty()) continue;
 
-                if (line[PC].startsWith("DIM ")) {
-                    String current = line[PC].substring(3);
-                    if(current.endsWith(" INTEGER")){
-                        String[] par = current.split(" AS ");
-                        varibaleSTORAGE.put(par[0].trim(), 0);
-                    }
-                } else if (line[PC].startsWith("IF ")) {
-//                    line[PC] = line[PC].substring(2, line[PC].length() - 4).trim();
-//                    IFresult = booleanOperation(line[PC]);
-                } else if (line[PC].startsWith("WHILE ")) {
+            if (line[PC].startsWith("DIM ")) {
+                String current = line[PC].substring(3);
+                if(current.endsWith(" INTEGER")){
+                    String[] par = current.split(" AS ");
+                    varibaleSTORAGE.put(par[0].trim(), 0);
+                }
+            } else if (line[PC].startsWith("IF ")) {
+                String booleanOp = line[PC].substring(2, line[PC].length() - 4).trim();
+                if(booleanOperation(booleanOp)){
+                    // continue here!!! do not forget!!!
+                }
+            } else if (line[PC].startsWith("WHILE ")) {
 
-                } else if (line[PC].startsWith("FOR ")) {
+            } else if (line[PC].startsWith("FOR ")) {
 
+            } else if (line[PC].startsWith("PRINT ")){
+                line[PC] = line[PC].substring(5).trim();
+                System.out.println(formula(line[PC]));
+            } else if (line[PC].contains("=") && !(line[PC].contains("=="))){
+                String[] equality = line[PC].split("=");
+                String leftSide = equality[0].trim();
+                String rightSide = equality[1].trim();
+                int rightValue = formula(rightSide);
+                if(leftSide.contains(" ") && !(varibaleSTORAGE.containsKey(leftSide))){
+                    System.out.println("Needs a valid input");
+                } else if (varibaleSTORAGE.containsKey(leftSide)) {
+                    varibaleSTORAGE.put(leftSide, rightValue);
+                } else{
+                    Exception RuntimeException;
+                    throw new RuntimeException();
+                }
+            }
+
+        }
+    }
+    private static int matchENDIForELSE(String[] input, int IFindex){
+        int nestedIFcount = 0;
+        int ifBlockIndex = 0;
+        int elseBlockIndex = 0;
+        for(int i = IFindex; i < input.length; i++){
+            if(input[i].startsWith("IF ")){
+                nestedIFcount++;
+            }else if(input[i].startsWith("ELSE ") && nestedIFcount == 1){
+                return i;
+            } else if (input[i].startsWith("ENDIF ")){
+                nestedIFcount--;
+                if (nestedIFcount == 0){
+                    return i;
                 }
             }
         }
-    }
-
-    private static void IFhandler(String input){
+        return -1;
     }
 
     private static boolean booleanOperation(String input){
@@ -113,5 +145,15 @@ public class BASICinterpreter {
     }
 
     public static void main(String[] args) {
+        BASICinterpreter interpreter = new BASICinterpreter();
+
+        String program = "";
+
+        while(scanner.hasNextLine()) {
+            program += scanner.nextLine();
+            program += '\n';
+            //press CTRL+D to stop receiving input, or CTRL+Z depending on the computer
+        }
+        interpreter.lineOperation(program);
     }
 }
