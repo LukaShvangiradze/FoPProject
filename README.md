@@ -44,3 +44,9 @@ ELSE PRINT 1 is not supported by our interpreter, instead write:
 ### are in .java files, all files are named according to the name 
 ### of the problem, the Algorithms file has all the info about the algorithms and they have been tested by us. Also, everything required per the rules, like variable assignment, arithmetic operations, and etc 
 ### is supported by this interpreter.
+
+#### NOTE: this style of coding is unfavourable as it extends the lines by a lot.
+  we do have a code that handles arithmetic operations and boolean operations 
+  (even multiple calculations by precedence inside the boolean function),
+  however the incorporation led to various exceptions, the code can be found on Test-Branch 
+  (function names: booleanOperation and formula).
