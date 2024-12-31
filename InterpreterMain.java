@@ -113,7 +113,7 @@ public class InterpreterMain {
                 }
 
             else if(lines[i].startsWith("ELSEIF ") && !mulIfElse) {
-                boolean ind = handleElseIf(lines[i]);
+                boolean ind = handleIfOrElseIf(lines[i], "ELSEIF");
                 if(!ind) {
                     mulIfElse = false;
                 }
@@ -133,7 +133,7 @@ public class InterpreterMain {
 
 // Handle IF statement and its condition
                 } else if (lines[i].startsWith("IF ")) {
-                    boolean ind = handleIf(lines[i]);
+                    boolean ind = handleIfOrElseIf(lines[i], "IF");
                     if (!ind) {
                         mulIfElse = false; // Mark IF condition as false
                     }
@@ -141,9 +141,6 @@ public class InterpreterMain {
 
 // Handle ELSE statement when previous IF was true
                 }
-
-
-
 
                 else if (lines[i].startsWith("ELSE") && mulIfElse) {
                     // Skip to END statement since IF was true
@@ -363,141 +360,10 @@ public class InterpreterMain {
     }
 
 
-        private boolean handleIf(String line) {
+        private boolean handleIfOrElseIf(String line, String d) {
             if(line.contains(">=")) {
                 String[] par = line.split(">=");
-                String[] lef = par[0].split("IF");
-                String op = lef[1].trim();
-                String[] rig = par[1].split("THEN");
-                String opana = rig[0].trim();
-
-                int x, y;
-
-                if(('0' <= op.charAt(0) && op.charAt(0) <= '9') || op.charAt(0) == '-') {
-                    x = Integer.parseInt(op);
-                }
-                else x = map.get(op);
-
-                if(('0' <= opana.charAt(0) && opana.charAt(0) <= '9') || opana.charAt(0) == '-') {
-                    y = Integer.parseInt(opana);
-                }
-                else y = map.get(opana);
-
-                return x >= y;
-            }
-            else if(line.contains("<=")) {
-                String[] par = line.split("<=");
-                String[] lef = par[0].split("IF");
-                String op = lef[1].trim();
-                String[] rig = par[1].split("THEN");
-                String opana = rig[0].trim();
-
-                int x, y;
-
-                if(('0' <= op.charAt(0) && op.charAt(0) <= '9') || op.charAt(0) == '-') {
-                    x = Integer.parseInt(op);
-                }
-                else x = map.get(op);
-
-                if(('0' <= opana.charAt(0) && opana.charAt(0) <= '9') || opana.charAt(0) == '-') {
-                    y = Integer.parseInt(opana);
-                }
-                else y = map.get(opana);
-
-                return x < y;
-            }
-            else if(line.contains("=")) {
-                String[] par = line.split("=");
-                String[] lef = par[0].split("IF");
-                String op = lef[1].trim();
-                String[] rig = par[1].split("THEN");
-                String opana = rig[0].trim();
-
-                int x, y;
-
-                if(('0' <= op.charAt(0) && op.charAt(0) <= '9') || op.charAt(0) == '-') {
-                    x = Integer.parseInt(op);
-                }
-                else x = map.get(op);
-
-                if(('0' <= opana.charAt(0) && opana.charAt(0) <= '9') || opana.charAt(0) == '-') {
-                    y = Integer.parseInt(opana);
-                }
-                else y = map.get(opana);
-
-                return x == y;
-            }
-            else if(line.contains("<>")) {
-                String[] par = line.split("<>");
-                String[] lef = par[0].split("IF");
-                String op = lef[1].trim();
-                String[] rig = par[1].split("THEN");
-                String opana = rig[0].trim();
-
-                int x, y;
-
-                if(('0' <= op.charAt(0) && op.charAt(0) <= '9') || op.charAt(0) == '-') {
-                    x = Integer.parseInt(op);
-                }
-                else x = map.get(op);
-
-                if(('0' <= opana.charAt(0) && opana.charAt(0) <= '9') || opana.charAt(0) == '-') {
-                    y = Integer.parseInt(opana);
-                }
-                else y = map.get(opana);
-
-                return x != y;
-            }
-            else if(line.contains(">")) {
-                String[] par = line.split(">");
-                String[] lef = par[0].split("IF");
-                String op = lef[1].trim();
-                String[] rig = par[1].split("THEN");
-                String opana = rig[0].trim();
-
-                int x, y;
-
-                if(('0' <= op.charAt(0) && op.charAt(0) <= '9') || op.charAt(0) == '-') {
-                    x = Integer.parseInt(op);
-                }
-                else x = map.get(op);
-
-                if(('0' <= opana.charAt(0) && opana.charAt(0) <= '9') || opana.charAt(0) == '-') {
-                    y = Integer.parseInt(opana);
-                }
-                else y = map.get(opana);
-
-                return x > y;
-            }
-            else if(line.contains("<")) {
-                String[] par = line.split("<");
-                String[] lef = par[0].split("IF");
-                String op = lef[1].trim();
-                String[] rig = par[1].split("THEN");
-                String opana = rig[0].trim();
-
-                int x, y;
-
-                if(('0' <= op.charAt(0) && op.charAt(0) <= '9') || op.charAt(0) == '-') {
-                    x = Integer.parseInt(op);
-                }
-                else x = map.get(op);
-
-                if(('0' <= opana.charAt(0) && opana.charAt(0) <= '9') || opana.charAt(0) == '-') {
-                    y = Integer.parseInt(opana);
-                }
-                else y = map.get(opana);
-
-                return x < y;
-            }
-
-            return false;
-        }
-
-        private boolean handleElseIf(String line) {
-            if(line.contains(">=")) {
-                String[] par = line.split(">=");
-                String[] lef = par[0].split("IF");
+                String[] lef = par[0].split(d);
                 String op = lef[1].trim();
                 String[] rig = par[1].split("THEN");
                 String opana = rig[0].trim();
