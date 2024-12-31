@@ -6,7 +6,7 @@ public class InterpreterMain {
 
     private static Map<String, Integer> map = new HashMap<>(); // Variable storage
 
-    private static boolean mulIfElse = true; // indicator to see if IF condition is correct or not
+    private static boolean mulIfElse = true;
 
     private static int ind; // Stores index for While loop
 
@@ -30,10 +30,10 @@ public class InterpreterMain {
                 gen = dev[1].trim();
                 String lef = div[0].trim();
                 String rig = div[1].trim();
-                if (('0' <= lef.charAt(0) && lef.charAt(0) <= '9') || lef.charAt(0) == '-') { //if it is number
-                    x = Integer.parseInt(lef);
+                if (('0' <= lef.charAt(0) && lef.charAt(0) <= '9') || lef.charAt(0) == '-') { //if lef is number
+                    x = Integer.parseInt(lef // Initialize loop variable
                     map.put(gen, x);
-                } else {  // if it is variable
+                } else {  // if lef is variable
                     x = map.get(lef);
                     map.put(gen, x);
                 }
@@ -58,7 +58,7 @@ public class InterpreterMain {
                     continue; // If the loop variable exceeds the loop limit, we terminate the current FOR loop and proceed to the next line of code.
             } else if (lines[i].startsWith("WHILE ")) {
                 ind = i;
-                if (isHandleWhile(lines[ind])) {
+                if (isHandleWhile(lines[ind])) { // Check whether the WHILE loop condition is still true.
                     continue;
                 }
                 for (int j = i; j < lines.length; j++) { //If the WHILE loop condition is false, we move to the line where the loop end
@@ -158,11 +158,12 @@ public class InterpreterMain {
         }
     }
 
-        private boolean isHandleWhile(String line){
+        private boolean isHandleWhile(String line){ 
             String[] par = line.split("WHILE");
+            //If a line contains '>=': first, split the line by '>='. Then, using regex, extract the left and right variables(number). If the first character of a part is a digit or '-', it indicates that the part is a number, not a variable.
             if (line.contains(">=")) {
                 String[] div = par[1].split(">=");
-                int x, y;
+                int x, y;  // x becomes the value of the left variable (number), and y becomes the value of the right variable (number).
                 div[0] = div[0].trim();
                 div[1] = div[1].trim();
                 if (('0' <= div[0].charAt(0) && div[0].charAt(0) <= '9') || div[0].charAt(0) == '-') {
@@ -173,7 +174,7 @@ public class InterpreterMain {
                 } else y = map.get(div[1]);
                 return x >= y;
 
-            } else if (line.contains("<=")) {
+            } else if (line.contains("<=")) { 
                 String[] div = par[1].split("<=");
                 int x, y;
                 div[0] = div[0].trim();
