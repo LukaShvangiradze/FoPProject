@@ -41,5 +41,6 @@ ELSE PRINT 1 is not supported by our interpreter, instead write:
    NEXT I
    
  ### 10) Everything else is perfect really. The interpreter correctly executes all of the 10 algorithms required for this project, examples of each of them
-### are in Algorithms file, and they have been tested by us. Also, everything required per the rules, like variable assignment, arithmetic operations, and etc 
+### are in .java files, all files are named according to the name 
+### of the problem, the Algorithms file has all the info about the algorithms and they have been tested by us. Also, everything required per the rules, like variable assignment, arithmetic operations, and etc 
 ### is supported by this interpreter.
