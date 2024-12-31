@@ -31,7 +31,7 @@ public class InterpreterMain {
                 String lef = div[0].trim();
                 String rig = div[1].trim();
                 if (('0' <= lef.charAt(0) && lef.charAt(0) <= '9') || lef.charAt(0) == '-') { //if lef is number
-                    x = Integer.parseInt(lef // Initialize loop variable
+                    x = Integer.parseInt(lef); // Initialize loop variable
                     map.put(gen, x);
                 } else {  // if lef is variable
                     x = map.get(lef);
@@ -161,6 +161,7 @@ public class InterpreterMain {
         private boolean isHandleWhile(String line){ 
             String[] par = line.split("WHILE");
             //If a line contains '>=': first, split the line by '>='. Then, using regex, extract the left and right variables(number). If the first character of a part is a digit or '-', it indicates that the part is a number, not a variable.
+            //it is the same logic for other operations 
             if (line.contains(">=")) {
                 String[] div = par[1].split(">=");
                 int x, y;  // x becomes the value of the left variable (number), and y becomes the value of the right variable (number).
@@ -238,6 +239,7 @@ public class InterpreterMain {
 
 
             return false;
+            
         }
 
 
