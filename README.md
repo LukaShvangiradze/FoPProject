@@ -30,7 +30,7 @@ Key things about this interpreter:
 5) Expressions do not support more than two variables or literals. For example, 10+20-30 is not supported, to calculate the result first find 10+20 and then substitute 30 to 
 the result. But things like i = j + k is definetely supported.
 6) It is preferred to separate all the things with 1 space exactly, but when writing a negative number for example -10, don't write space between '-' and 10 for example
-7) No ELSEIF keyword, or Error and Input handling, as well as nested loops or other advanced things, as they were not required per the rules.
+7) No nested loops. In ELSEIF keyword is supported and any number of them are executed by the code
 8) Multiple statemens after if-else are supported, but after ELSE make sure to write the order to be executed below ELSE on the upcoming lines, for example:
 ELSE PRINT 1 is not supported by our interpreter, instead write:
                                                     ELSE
