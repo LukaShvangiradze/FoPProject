@@ -308,35 +308,35 @@ public class InterpreterMain {
 
     }
 
-
+// used for handling assignments in the above function
     private void handleA(String v, String par1, String op) {
-        String[] div = par1.split(op);
-        String lef = div[0].trim();
-        String rig = div[1].trim();
+        String[] div = par1.split(op); 
+        String lef = div[0].trim(); // case for the left side
+        String rig = div[1].trim(); // case for the right side
 
         int x, y;
 
-        if (('0' <= lef.charAt(0) && lef.charAt(0) <= '9') || lef.charAt(0) == '-') {
-            x = Integer.parseInt(lef);
-        } else x = map.get(lef);
+        if (('0' <= lef.charAt(0) && lef.charAt(0) <= '9') || lef.charAt(0) == '-') { // if the left side is an integer
+            x = Integer.parseInt(lef); 
+        } else x = map.get(lef); // if it's a variable
 
-        if (('0' <= rig.charAt(0) && rig.charAt(0) <= '9') || rig.charAt(0) == '-') {
+        if (('0' <= rig.charAt(0) && rig.charAt(0) <= '9') || rig.charAt(0) == '-') { // if the right side is an integer
             y = Integer.parseInt(rig);
-        } else y = map.get(rig);
+        } else y = map.get(rig); // if it's a variable
 
         if (op == "\\+") map.put(v, x + y);
         if (op == "\\-") map.put(v, x - y);
         if (op == "\\*") map.put(v, x * y);
         if (op == "\\/") map.put(v, x / y); // 0
         if (op == "MOD") map.put(v, x % y); //0
-
+        // the above ifs do the operations
     }
 
 
-    private int handlePrintBetter(String sub, String op) {
-        String[] div = sub.split(op);
-        String lef = div[0].trim();
-        String rig = div[1].trim();
+    private int handlePrintBetter(String sub, String op) { // used in handleprint
+        String[] div = sub.split(op); // splits the code by the operation
+        String lef = div[0].trim(); // case for the left side
+        String rig = div[1].trim(); // case for the right side
 
         int x, y;
 
@@ -354,8 +354,8 @@ public class InterpreterMain {
                 System.exit(0);
             }
         }
-
-
+        // the above is used for fetching data and parsing
+        
         int ans = 0;
 
         if (op == "\\+") ans = x + y;
@@ -363,13 +363,14 @@ public class InterpreterMain {
         if (op == "\\/") ans = x / y;
         if (op == "MOD") ans = x % y;
         if (op == "\\*") ans = x * y;
-
+        // the above is used for calculating
         return ans;
     }
 
-
+    // used for handling if or elseif, returns a value for the boolean operations
         private boolean handleIfOrElseIf(String line, String d) {
-            if(line.contains(">=")) {
+    // below we have the following methods: split by operation, fetch left side value, fetch right side value, calculate boolean operation
+            if(line.contains(">=")) { // case for >=
                 String[] par = line.split(">=");
                 String[] lef = par[0].split(d);
                 String op = lef[1].trim();
@@ -390,7 +391,7 @@ public class InterpreterMain {
 
                 return x >= y;
             }
-            else if(line.contains("<=")) {
+            else if(line.contains("<=")) { // case for <=
                 String[] par = line.split("<=");
                 String[] lef = par[0].split("IF");
                 String op = lef[1].trim();
@@ -411,7 +412,7 @@ public class InterpreterMain {
 
                 return x < y;
             }
-            else if(line.contains("=")) {
+            else if(line.contains("=")) { // case for =
                 String[] par = line.split("=");
                 String[] lef = par[0].split("IF");
                 String op = lef[1].trim();
@@ -432,7 +433,7 @@ public class InterpreterMain {
 
                 return x == y;
             }
-            else if(line.contains("<>")) {
+            else if(line.contains("<>")) { // case for <>
                 String[] par = line.split("<>");
                 String[] lef = par[0].split("IF");
                 String op = lef[1].trim();
@@ -453,7 +454,7 @@ public class InterpreterMain {
 
                 return x != y;
             }
-            else if(line.contains(">")) {
+            else if(line.contains(">")) { // case for >
                 String[] par = line.split(">");
                 String[] lef = par[0].split("IF");
                 String op = lef[1].trim();
@@ -474,7 +475,7 @@ public class InterpreterMain {
 
                 return x > y;
             }
-            else if(line.contains("<")) {
+            else if(line.contains("<")) { // case for <
                 String[] par = line.split("<");
                 String[] lef = par[0].split("IF");
                 String op = lef[1].trim();
@@ -499,6 +500,7 @@ public class InterpreterMain {
             return false;
         }
 
+    // main method to start running the code vvvvvvvvvvv
         public static void main(String[] args) {
 
             InterpreterMain interpreter = new InterpreterMain();
