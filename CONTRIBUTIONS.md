@@ -1,11 +1,11 @@
 Each and every member of this project took part in contibuting to the final repository.
 
 #### Luka Shvangiradze
- The leader, Luka Shvangiradze, of the project assigned tasks to each member, wrote the final part of the code, compiling all of the previously written scripts, fixing issues to the repository, and more. To specify, here are the different contributions to this project made by the individual:
+ The leader, Luka Shvangiradze, of the project assigned tasks to each member, creating main parts of the code, compiling all of the previously written scripts, handling errors, and more. To specify, here are the different contributions to this project made by the individual:
  1. The README.md file was finalized.
  2. Compiling the everyone's code into one.
  3. Updating the algorithms files. (Used to be a single file, with limited codes)
- 4. Created and finalized the main function, eval (excluding handlefor), print and dim functions.
+ 4. Created and finalized the main, eval (excluding handlefor), print and dim functions.
  5. Edited errors.
 
 #### Saba Nemsitsveridze
@@ -13,7 +13,7 @@ Each and every member of this project took part in contibuting to the final repo
  1. Branches that were used for testing functions.
  2. Initiated the compiled Algorithms file.
  3. Finalized the CONTRIBUTIONS.md, and comments of the code.
- 4. Created and finalized ishandlewhile function, handlea, handleprintbetter functions.
+ 4. Created and finalized ishandlewhile, handlea, handleprintbetter functions.
  5. Edited errors.
 
 #### Sandro Kapanadze
