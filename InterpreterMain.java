@@ -245,16 +245,18 @@ public class InterpreterMain {
 
     private void handleDim(String line) {
         String sub = line;
-        sub = line.substring(3);
-        String[] par = sub.split(" AS ");
-        map.put(par[0].trim(), 0);
+        sub = line.substring(3); // In this sub, we have a line that starts with our variable.
+        String[] par = sub.split(" AS "); 
+        map.put(par[0].trim(), 0); // We put this variable in the map as a key, and its value is set to 0.
     }
 
     private void handlePrint(String line) {
         String sub = line;
-        sub = line.substring(5).trim();
+        sub = line.substring(5).trim(); // In this sub, we have line which does not starts with PRINT(It may start with a variable, a number, or an operation.).
 
-        if (sub.contains("+")) {
+        //If we need to print an operation, we check whether the line contains '=', '-', '', '/', or 'mod'. If it contains any of these, it means we need to print the operation, and we proceed as we do for these methods ('=', '-', '', '/', 'mod').
+        
+        if (sub.contains("+")) { 
             System.out.println(handlePrintBetter(sub, "\\+"));
 
         } else if (sub.contains("-") && sub.charAt(0) != '-') {
@@ -269,7 +271,7 @@ public class InterpreterMain {
         } else if (sub.contains("MOD")) {
             System.out.println(handlePrintBetter(sub, "MOD"));
 
-        } else {
+        } else {  // If there is no operation, it means we need to print either a number or a variable. We check which one it is and then print it
             if (('0' <= sub.charAt(0) && sub.charAt(0) <= '9') || sub.charAt(0) == '-') {
                 System.out.println(Integer.parseInt(sub));
             } else {
@@ -277,7 +279,10 @@ public class InterpreterMain {
             }
         }
     }
-
+    // For an assignment, we first check how the left-side variable gets its value. 
+    //If the right side contains an operation, we check whether the line includes '/', '*', '-', or 'mod'. 
+    //If the line does not contain any of these, it means the right side contains either a number or a variable, 
+    //and we will assign this value to the right-side variable.
     private void handleAssignment(String line) {
         String[] par = line.split("=");
         String val = par[0].trim();
