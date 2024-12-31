@@ -6,7 +6,7 @@ public class InterpreterMain {
 
     private static Map<String, Integer> map = new HashMap<>(); // Variable storage
 
-    private static boolean mulIfElse = true;
+    private static boolean mulIfElse = true; // indicator to see if IF condition is correct or not
 
     private static int ind; // Stores index for While loop
 
